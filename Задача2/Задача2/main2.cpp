@@ -5,6 +5,7 @@ using namespace std;
 bool check_email(string Email) {
 	bool flag_dog = false;
 	int count_dog = 0;
+	int count_I_after_dog = 0;
 	for (int i = 0; i < Email.length(); i++) {
 		if (i == 0 && (Email[i] == '@' || Email[i] == '.')){
 			return false;
@@ -19,15 +20,21 @@ bool check_email(string Email) {
 		if (Email[i] == '@') {
 			flag_dog = true;
 			count_dog++;
+			if (i == Email.length() - 1) {
+				return false;
+			}
 			if (count_dog > 1) {
 				return false;
 			}
 		}
+		if (flag_dog == true) {
+			count_I_after_dog++;
+		}
+		if (count_I_after_dog > 63) {
+			return false;
+		}
 		if (i > 64 && flag_dog == false) {
 			return 0;
-		}
-		if (i > 128) {
-			return false;
 		}
 
 		if (flag_dog == false) {
